@@ -1,7 +1,7 @@
 module.exports = {
   parserOptions: {
     ecmaVersion: 2021,
-    sourceType: "module",
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
     },
@@ -10,9 +10,14 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
-  plugins: ["react", "react-hooks"],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+  ],
+  plugins: ['react', 'react-hooks'],
   rules: {
     // Define your custom ESLint rules here, if needed.
+    'react/prop-types': 0,
   },
 };

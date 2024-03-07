@@ -18,7 +18,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sidebar } from '../';
 
+const PREFIX = 'MyNavbar';
+const classes = {
+  menuButton: `${PREFIX}-menuButton`,
+  drawer: `${PREFIX}-drawer`,
+  drawerPaper: `${PREFIX}-drawerPaper`,
+  linkButton: `${PREFIX}-linkButton`,
+};
 const drawerWidth = '200px';
+
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   height: '80px',
   display: 'flex',
@@ -35,15 +43,14 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
       display: 'none',
     },
   },
+  [`& .${classes.linkButton}`]: {
+    '&:hover': {
+      color: '#fff !important',
+      textDecoration: 'none',
+    },
+  },
 }));
 
-const PREFIX = 'MyNavbar';
-const classes = {
-  menuButton: `${PREFIX}-menuButton`,
-  drawer: `${PREFIX}-drawer`,
-  drawerPaper: `${PREFIX}-drawerPaper`,
-  linkButton: `${PREFIX}-linkButton`,
-};
 const StyledNav = styled('nav')(({ theme }) => ({
   [`&.${classes.drawer}`]: {
     [theme.breakpoints.up('sm')]: {
@@ -58,12 +65,6 @@ const StyledNav = styled('nav')(({ theme }) => ({
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
-    },
-  },
-  [`& .${classes.linkButton}`]: {
-    '&:hover': {
-      color: '#fff !important',
-      textDecoration: 'none',
     },
   },
 }));
@@ -84,7 +85,7 @@ const NavBar = () => {
               color="inherit"
               edge="start"
               style={{ outline: 'none' }}
-              onClick={() => {}}
+              onClick={() => setMobileOpen((prevValue) => !prevValue)}
             >
               <Menu />
             </IconButton>
@@ -102,7 +103,8 @@ const NavBar = () => {
               <Button
                 color="inherit"
                 component={Link}
-                to={`/profiles/123`}
+                to={`/profiles/:id`}
+                className={classes.linkButton}
                 onClick={() => {}}
               >
                 <Avatar style={{ width: 30, height: 30 }} alt="Profile" />
@@ -119,6 +121,7 @@ const NavBar = () => {
               variant="temporary"
               anchor="right"
               open={mobileOpen}
+              onClose={() => setMobileOpen((prevValue) => !prevValue)}
               classes={{ paper: classes.drawerPaper }}
               ModalProps={{ keepMounted: true }}
             >
