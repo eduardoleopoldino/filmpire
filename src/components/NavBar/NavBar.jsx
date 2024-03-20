@@ -25,7 +25,7 @@ const classes = {
   drawerPaper: `${PREFIX}-drawerPaper`,
   linkButton: `${PREFIX}-linkButton`,
 };
-const drawerWidth = '200px';
+const drawerWidth = '240px';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   height: '80px',
