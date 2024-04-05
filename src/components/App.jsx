@@ -1,4 +1,3 @@
-import { CssBaseline } from '@mui/material';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Actors, Movie, Movies, NavBar, Profile } from './';
@@ -14,7 +13,6 @@ const Root = styled('div')(() => ({
 const App = () => {
   return (
     <Root>
-      <CssBaseline />
       <NavBar />
       <Box sx={{ flexGrow: 1, padding: '2em' }}>
         <Box sx={{ height: '70px' }} />

@@ -28,8 +28,8 @@ const CustomGrid = styled(Grid)(({ theme }) => ({
   },
   '& .title': {
     color: theme.palette.text.primary,
-    textOverflow: 'elipsis',
-    width: '230px',
+    textOverflow: 'ellipsis',
+    width: '200px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     marginTop: '10px',

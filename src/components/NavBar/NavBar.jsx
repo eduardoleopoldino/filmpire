@@ -14,9 +14,10 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sidebar } from '../';
+import { Sidebar, Search } from '../';
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 
 const PREFIX = 'MyNavbar';
 const classes = {
@@ -36,8 +37,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     marginLeft: 0,
     flexWrap: 'wrap',
   },
-  '& .teste': {
-    border: '1px solid red',
+  '.menuButton': {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
@@ -75,13 +75,15 @@ const NavBar = () => {
   const isAuthenticated = true;
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const colorMode = useContext(ColorModeContext);
+
   return (
     <>
       <AppBar position="fixed">
         <StyledToolbar>
           {isMobile && (
             <IconButton
-              className="teste"
+              className="menuButton"
               color="inherit"
               edge="start"
               style={{ outline: 'none' }}
@@ -90,10 +92,14 @@ const NavBar = () => {
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
-            {theme.palette.mode === 'light' ? <Brightness7 /> : <Brightness4 />}
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            onClick={colorMode.toggleColorMode}
+          >
+            {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {!isMobile && 'Search...'}
+          {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
               <Button color="inherit" onClick={() => {}}>
@@ -107,11 +113,12 @@ const NavBar = () => {
                 className={classes.linkButton}
                 onClick={() => {}}
               >
+                {!isMobile && <>My Movies &nbsp;</>}
                 <Avatar style={{ width: 30, height: 30 }} alt="Profile" />
               </Button>
             )}
           </div>
-          {!!isMobile && 'Search...'}
+          {!!isMobile && <Search />}
         </StyledToolbar>
       </AppBar>
       <div>

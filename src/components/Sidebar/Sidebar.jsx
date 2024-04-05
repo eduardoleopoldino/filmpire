@@ -50,9 +50,6 @@ const categories = [
 const Sidebar = () => {
   const { data, error, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
-  // const { genreIdOrCategoryName } = useSelector(
-  //   (state) => state.currentGenreOrCategory
-  // );
 
   if (error) return 'An error has occured.';
 
@@ -61,7 +58,7 @@ const Sidebar = () => {
       <Link to="/" className="imageLink">
         <img
           className="image"
-          src={theme.palette.mode === 'light' ? redLogo : blueLogo}
+          src={theme.palette.mode === 'dark' ? redLogo : blueLogo}
           alt="Filmpire Home"
         />
       </Link>
