@@ -1,27 +1,25 @@
-import React, { useEffect } from 'react';
 import {
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListSubheader,
-  ListItemIcon,
   Box,
   CircularProgress,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
 } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createTheme, styled } from '@mui/material/styles';
-import { useGetGenresQuery } from '../../services/TMDB';
 import GenreIcons from '../../assets/genres';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import { useGetGenresQuery } from '../../services/TMDB';
 
-const theme = createTheme();
 const blueLogo =
-  'https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png';
-const redLogo =
   'https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png';
+const redLogo =
+  'https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png';
 
 const Root = styled('div')(({ theme }) => ({
   ['& .image']: {
@@ -50,6 +48,7 @@ const categories = [
 const Sidebar = () => {
   const { data, error, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   if (error) return 'An error has occured.';
 

@@ -1,29 +1,14 @@
 import React from 'react';
-import { Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { Movie } from '..';
+import { CustomGrid } from './styles';
 
-const Root = styled('div')(({ theme }) => ({
-  '.moviesContainer': {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    overflow: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
-    },
-  },
-}));
-
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, numberOfMovies }) => {
   return (
-    <Root>
-      <Grid container className="moviesContainer">
-        {movies.results.map((movie, i) => (
-          <Movie key={i} movie={movie} i={i} />
-        ))}
-      </Grid>
-    </Root>
+    <CustomGrid container>
+      {movies.results.slice(0, numberOfMovies).map((movie, i) => (
+        <Movie key={i} movie={movie} i={i} />
+      ))}
+    </CustomGrid>
   );
 };
 

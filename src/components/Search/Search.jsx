@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { styled, useTheme } from '@mui/material/styles';
+import { InputAdornment, TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { searchMovie } from '../../features/currentGenreOrCategory';
+import { useLocation } from 'react-router-dom';
 
 const Root = styled('div')(({ theme }) => ({
   searchContainer: {
@@ -26,6 +26,9 @@ const Root = styled('div')(({ theme }) => ({
 const Search = () => {
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  if (location.pathname !== '/') return null;
 
   const handleKeyUp = (event) => {
     if (event.key === 'Enter') {
@@ -34,7 +37,7 @@ const Search = () => {
   };
 
   return (
-    <Root className='searchContainer'>
+    <Root className="searchContainer">
       <TextField
         InputProps={{
           className: 'input',

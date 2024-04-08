@@ -7,3 +7,5 @@ export { default as NavBar } from './NavBar/NavBar';
 export { default as Profile } from './Profile/Profile';
 export { default as Sidebar } from './Sidebar/Sidebar';
 export { default as Search } from './Search/Search';
+export { default as RatedCards } from './RatedCards/RatedCards';
+export { default as Pagination } from './Pagination/Pagination';
