@@ -5,6 +5,7 @@ export const CustomDiv = styled('div')(({ theme }) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '20px 0',
   },
   '& .button': {
     margin: '3px 2px',
