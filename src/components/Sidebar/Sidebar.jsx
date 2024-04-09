@@ -9,8 +9,8 @@ import {
   ListSubheader,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GenreIcons from '../../assets/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -45,10 +45,17 @@ const categories = [
   { label: 'Upcoming', value: 'upcoming' },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ setMobileOpen }) => {
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
   const { data, error, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   if (error) return 'An error has occured.';
 

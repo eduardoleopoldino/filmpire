@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Actors, MovieInformation, Movies, NavBar, Profile } from './';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import useAlan from './Alan';
 
 const Root = styled('div')(() => ({
   display: 'flex',
@@ -11,6 +12,9 @@ const Root = styled('div')(() => ({
 }));
 
 const App = () => {
+  const alanBtnContainer = useRef();
+  useAlan();
+
   return (
     <Root>
       <NavBar />
@@ -24,6 +28,7 @@ const App = () => {
           <Route exact path="/profile/:id" element={<Profile />} />
         </Routes>
       </Box>
+      <div ref={alanBtnContainer} />
     </Root>
   );
 };

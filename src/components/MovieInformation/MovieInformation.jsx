@@ -52,8 +52,10 @@ const Movie = () => {
     sessionId: sessionId,
     page: 1,
   });
-  const { data: recommendations, isFetching: isRecommendationsFetching } =
-    useGetRecommendationsQuery({ list: '/recommendations', movie_id: id });
+  const { data: recommendations } = useGetRecommendationsQuery({
+    list: '/recommendations',
+    movie_id: id,
+  });
   const dispatch = useDispatch();
   const [isMovieFavorited, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
