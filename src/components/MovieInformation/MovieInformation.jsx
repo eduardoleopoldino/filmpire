@@ -1,10 +1,10 @@
 import {
+  Add,
   ArrowBack,
   Favorite,
   FavoriteBorderOutlined,
   Language,
   Movie as MovieIcon,
-  PlusOne,
   Remove,
   Theaters,
 } from '@mui/icons-material';
@@ -40,18 +40,20 @@ const Movie = () => {
   const { user } = useSelector(userSelector);
   const { id } = useParams();
   const { data, isFetching, error } = useGetMovieQuery(id);
-  const { data: favoriteMovies } = useGetListQuery({
-    listName: 'favorite/movies',
-    accountId: user.id,
-    sessionId: sessionId,
-    page: 1,
-  });
-  const { data: watchlistMovies } = useGetListQuery({
-    listName: 'watchlist/movies',
-    accountId: user.id,
-    sessionId: sessionId,
-    page: 1,
-  });
+  const { data: favoriteMovies } = (sessionId &&
+    useGetListQuery({
+      listName: 'favorite/movies',
+      accountId: user.id,
+      sessionId: sessionId,
+      page: 1,
+    })) || { data: [] };
+  const { data: watchlistMovies } = (sessionId &&
+    useGetListQuery({
+      listName: 'watchlist/movies',
+      accountId: user.id,
+      sessionId: sessionId,
+      page: 1,
+    })) || { data: [] };
   const { data: recommendations } = useGetRecommendationsQuery({
     list: '/recommendations',
     movie_id: id,
@@ -89,13 +91,13 @@ const Movie = () => {
 
   useEffect(() => {
     setIsMovieFavorited(
-      !!favoriteMovies?.results.find((movie) => movie?.id === data?.id)
+      !!favoriteMovies?.results?.find((movie) => movie?.id === data?.id)
     );
   }, [favoriteMovies, data]);
 
   useEffect(() => {
     setIsMovieFavorited(
-      !!watchlistMovies?.results.find((movie) => movie?.id === data?.id)
+      !!watchlistMovies?.results?.find((movie) => movie?.id === data?.id)
     );
   }, [watchlistMovies, data]);
 
@@ -143,7 +145,9 @@ const Movie = () => {
             </Typography>
           </Box>
           <Typography variant="h6" align="center" gutterBottom>
-            {data?.runtime} min / {data?.spoken_languages[0].name}
+            {data?.runtime} min /
+            {data?.spoken_languages.length > 0 &&
+              data?.spoken_languages[0].english_name}
           </Typography>
         </Grid>
         <Grid item className="genresContainer">
@@ -161,7 +165,7 @@ const Movie = () => {
                 alt=""
               />
               <Typography color="textPrimary" variant="subtitle1">
-                {genre.name}
+                {genre?.name}
               </Typography>
             </Link>
           ))}
@@ -230,8 +234,8 @@ const Movie = () => {
                   onClick={() => setOpen(true)}
                   href="#"
                   endIcon={<Theaters />}
+                  disabled={data?.videos?.results?.length === 0}
                 >
-                  {' '}
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -248,13 +252,15 @@ const Movie = () => {
                       <Favorite />
                     )
                   }
+                  disabled={!sessionId}
                 >
                   {!isMovieFavorited ? 'Favorite' : 'Unfavorite'}
                 </Button>
                 <Button
                   onClick={addToWatchlist}
                   href="#"
-                  endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
+                  endIcon={isMovieWatchlisted ? <Remove /> : <Add />}
+                  disabled={!sessionId}
                 >
                   Watchlist
                 </Button>
@@ -288,23 +294,23 @@ const Movie = () => {
         )}
       </Box>
 
-      <Modal
-        closeAfterTransition
-        className="modal"
-        open={open}
-        onClose={() => setOpen(false)}
-      >
-        {data?.videos?.results?.length > 0 && (
+      {data?.videos?.results?.length > 0 && (
+        <Modal
+          closeAfterTransition
+          className="modal"
+          open={open}
+          onClose={() => setOpen(false)}
+        >
           <iframe
             autoPlay
             className="video"
             frameBorder="0"
             title="Trailer"
-            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+            src={`https://www.youtube.com/embed/${data?.videos?.results[0].key}`}
             allow="autoplay"
           />
-        )}
-      </Modal>
+        </Modal>
+      )}
     </CustomGrid>
   );
 };

@@ -1,6 +1,7 @@
 import { Grow, Link, Rating, Tooltip, Typography } from '@mui/material';
 import React from 'react';
 import { CustomGrid } from './styles';
+import NoImage from '../../assets/images/no-image.jpg';
 
 const Movie = ({ movie, i }) => {
   return (
@@ -12,7 +13,7 @@ const Movie = ({ movie, i }) => {
             src={
               movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                : 'https://fillmurray.com/200/300'
+                : NoImage
             }
             alt={movie.title}
           />

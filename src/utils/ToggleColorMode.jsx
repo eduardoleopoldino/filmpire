@@ -1,13 +1,12 @@
-import { useMediaQuery } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import React, { useState, createContext, useMemo } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React, { createContext, useMemo, useState } from 'react';
 
 export const ColorModeContext = createContext();
 
 const ToggleColorMode = ({ children }) => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [mode, setMode] = useState(prefersDarkMode ? 'dark' : 'light');
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [mode, setMode] = useState('light');
   const theme = useMemo(
     () =>
       createTheme({
@@ -19,7 +18,6 @@ const ToggleColorMode = ({ children }) => {
   );
 
   const toggleColorMode = () => {
-    console.log(mode);
     setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
